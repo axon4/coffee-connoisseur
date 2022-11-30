@@ -1,7 +1,12 @@
 import Head from 'next/head';
+import Banner from '../components/Banner';
 import styles from '../styles/Home.module.css';
 
 function Home() {
+	const onButtonClick = () => {
+		console.log('CLICK');	
+	};
+	
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -10,7 +15,7 @@ function Home() {
 				<link rel='icon' type='image/x-icon' href='/favicon.ico' />
 			</Head>
 			<main className={styles.main}>
-				<h1 className={styles.title}>Coffee Connoiseur</h1>
+				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
 			</main>
 		</div>
 	);
