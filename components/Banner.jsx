@@ -11,7 +11,9 @@ const Banner = ({ buttonText, onButtonClick }) => {
 				</h1>
 				<p className={styles.subTitle}>Discover Local Coffee Shops</p>
 			</hgroup>
-			<button className={styles.button} onClick={onButtonClick}>{buttonText}</button>
+			<div className={styles.buttonWrapper}>
+				<button className={styles.button} onClick={onButtonClick}>{buttonText}</button>
+			</div>
 		</header>
 	);
 };
