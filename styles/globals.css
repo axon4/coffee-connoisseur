@@ -18,8 +18,29 @@ body {
 	background-position: 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-family: IBMPlexSans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	color: #373B64;
+}
+
+@font-face {
+	font-family: 'IBMPlexSans';
+	font-style: normal;
+	font-weight: 500;
+	src: url(/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'IBMPlexSans';
+	font-style: normal;
+	font-weight: 600;
+	src: url(/fonts/IBMPlexSans-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'IBMPlexSans';
+	font-style: normal;
+	font-weight: 700;
+	src: url(/fonts/IBMPlexSans-Bold.ttf) format('truetype');
 }
 
 p {
