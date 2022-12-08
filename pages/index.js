@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Banner from '../components/Banner';
 import styles from '../styles/Home.module.css';
 
@@ -16,6 +17,9 @@ function Home() {
 			</Head>
 			<main className={styles.main}>
 				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
+				<div className={styles.hero}>
+					{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
+				</div>
 			</main>
 		</div>
 	);
