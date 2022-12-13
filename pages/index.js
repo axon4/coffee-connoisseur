@@ -1,11 +1,17 @@
 import Head from 'next/head';
 // import Image from 'next/image';
 import Banner from '../components/Banner';
-import stores from '../data/stores.json';
+import storesData from '../data/stores.json';
 import Card from '../components/Card';
 import styles from '../styles/Home.module.css';
 
-function Home() {
+export async function getStaticProps() {
+	return {
+		props: {stores: storesData}
+	};
+};
+
+function Home({ stores }) {
 	const onButtonClick = () => {
 		console.log('CLICK');	
 	};
@@ -22,11 +28,16 @@ function Home() {
 					{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
 				</div>
 				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
-				<section className={styles.cardLayout}>
-					{stores.map(({ name, imageURL, ID }) => (
-						<Card name={name} imageURL={imageURL} href={`/store/${ID}`} />
-					))}
-				</section>
+				{stores.length > 0 && (
+					<>
+						<h2 className={styles.heading2}>London Stores</h2>
+						<section className={styles.cardLayout}>
+							{stores.map(({ ID, name, imageURL }) => (
+								<Card key={ID} name={name} imageURL={imageURL} href={`/store/${ID}`} />
+							))}
+						</section>
+					</>
+				)}
 			</main>
 		</div>
 	);
