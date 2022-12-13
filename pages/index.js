@@ -1,6 +1,7 @@
 import Head from 'next/head';
 // import Image from 'next/image';
 import Banner from '../components/Banner';
+import stores from '../data/stores.json';
 import Card from '../components/Card';
 import styles from '../styles/Home.module.css';
 
@@ -22,8 +23,9 @@ function Home() {
 				</div>
 				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
 				<section className={styles.cardLayout}>
-					<Card name='DarkHorse Coffee' imageURL='/hero.png' href='/store/darkhorse-coffee' />
-					<Card name='DarkHorse Coffee' imageURL='/hero.png' href='/store/darkhorse-coffee' />
+					{stores.map(({ name, imageURL, ID }) => (
+						<Card name={name} imageURL={imageURL} href={`/store/${ID}`} />
+					))}
 				</section>
 			</main>
 		</div>
