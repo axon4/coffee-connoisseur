@@ -21,7 +21,10 @@ function Home() {
 					{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
 				</div>
 				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
-				<Card name='DarkHorse Coffee' imageURL='/hero.png' href='/store/darkhorse-coffee' />
+				<section className={styles.cardLayout}>
+					<Card name='DarkHorse Coffee' imageURL='/hero.png' href='/store/darkhorse-coffee' />
+					<Card name='DarkHorse Coffee' imageURL='/hero.png' href='/store/darkhorse-coffee' />
+				</section>
 			</main>
 		</div>
 	);
