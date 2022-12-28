@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { storesGet } from '../../services/stores';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
-import storesData from '../../data/stores.json';
 import styles from '../../styles/store.module.css';
 
-export function getStaticPaths() {
-	const paths = storesData.map(({ ID }) => ({
-		params: {ID: ID.toString()}
+export async function getStaticPaths() {
+	const stores = await storesGet();
+	const paths = stores.map(({ fsq_id }) => ({
+		params: {ID: fsq_id.toString()}
 	}));
 	
 	return {
@@ -18,14 +19,15 @@ export function getStaticPaths() {
 };
 
 export async function getStaticProps({ params }) {
-	const store = storesData.find(({ ID }) => ID.toString() === params.ID);
+	const stores = await storesGet();
+	const store = stores.find(({ fsq_id }) => fsq_id.toString() === params.ID);
 		
 	return {
 		props: {...store}
 	};
 };
 
-const Store = ({ name, imageURL, address, neighbourhood }) => {
+const Store = ({ name, imageURL, location }) => {
 	const router = useRouter();
 	
 	if (router.isFallback) {
@@ -49,16 +51,16 @@ const Store = ({ name, imageURL, address, neighbourhood }) => {
 					<div className={styles.nameWrapper}>
 						<h1 className={styles.name}>{name}</h1>
 					</div>
-					<Image src={imageURL} alt={name} className={styles.storeImg} width={600} height={360} />
+					<Image src={imageURL || 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'} alt={name} className={styles.storeImg} width={600} height={360} />
 				</section>
 				<section className={classNames('glass', styles.col2)}>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/places.svg' alt='places icon' width={24} height={24} />
-						<p className={styles.text}>{address}</p>
+						<p className={styles.text}>{location.address}</p>
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/locationArrow.svg' alt='location arrow icon' width={24} height={24} />
-						<p className={styles.text}>{neighbourhood}</p>
+						<p className={styles.text}>{location.neighborhood[0]}</p>
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/star.svg' alt='star icon' width={24} height={24} />
