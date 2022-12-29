@@ -1,7 +1,9 @@
 import Head from 'next/head';
+import { useEffect } from 'react';
 // import Image from 'next/image';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
+import { useLocation } from '../hooks/useLocation';
 import { shopsGet } from '../services/shops';
 import styles from '../styles/Home.module.css';
 
@@ -14,8 +16,10 @@ export async function getStaticProps() {
 };
 
 function Home({ shops }) {
+	const { locate, coordinates, loading, error } = useLocation();
+
 	const onButtonClick = () => {
-		console.log('CLICK');	
+		locate();
 	};
 	
 	return (
@@ -29,17 +33,20 @@ function Home({ shops }) {
 				<div className={styles.hero}>
 					{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
 				</div>
-				<Banner buttonText='Locate Shops Near Me' onButtonClick={onButtonClick} />
-				{shops.length > 0 && (
-					<>
-						<h2 className={styles.heading2}>London Shops</h2>
-						<section className={styles.cardLayout}>
-							{shops.map(({ ID, name, imageURL }) => (
-								<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
-							))}
-						</section>
-					</>
-				)}
+				<Banner buttonText={loading ? 'Locating...' : 'Locate Shops Near Me'} onButtonClick={onButtonClick} />
+				{error && <pre>Error: {error}</pre>}
+				<div className={styles.sectionWrapper}>
+					{shops.length > 0 && (
+						<>
+							<h2 className={styles.heading2}>London Shops</h2>
+							<section className={styles.cardLayout}>
+								{shops.map(({ ID, name, imageURL }) => (
+									<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
+								))}
+							</section>
+						</>
+					)}
+				</div>
 			</main>
 		</div>
 	);

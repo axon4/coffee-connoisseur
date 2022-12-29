@@ -17,6 +17,10 @@
 	top: 0;
 }
 
+.sectionWrapper {
+	margin-top: 5rem;
+}
+
 .heading2 {
 	margin-top: 2rem;
 	padding-bottom: 2rem;
