@@ -46,7 +46,7 @@ const Shop = ({ name, address, neighbourhood, imageURL }) => {
 			<main className={classNames(styles.layout, styles.container)}>
 				<section className={styles.col1}>
 					<div className={styles.backToHomeLink}>
-						<Link href='/'>Home</Link>
+						<Link href='/'>← Home</Link>
 					</div>
 					<div className={styles.nameWrapper}>
 						<h1 className={styles.name}>{name}</h1>
