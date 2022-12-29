@@ -8,8 +8,8 @@ import styles from '../../styles/shop.module.css';
 
 export async function getStaticPaths() {
 	const shops = await shopsGet();
-	const paths = shops.map(({ fsq_id }) => ({
-		params: {ID: fsq_id.toString()}
+	const paths = shops.map(({ ID }) => ({
+		params: {ID: ID.toString()}
 	}));
 	
 	return {
@@ -19,15 +19,15 @@ export async function getStaticPaths() {
 };
 
 export async function getStaticProps({ params }) {
-	const shops = await shopsGet();
-	const shop = shops.find(({ fsq_id }) => fsq_id.toString() === params.ID);
+	const shops = await shopsGet(); 
+	const shop = shops.find(({ ID }) => ID.toString() === params.ID);
 		
 	return {
 		props: {...shop}
 	};
 };
 
-const Shop = ({ name, imageURL, location }) => {
+const Shop = ({ name, address, neighbourhood, imageURL }) => {
 	const router = useRouter();
 	
 	if (router.isFallback) {
@@ -51,16 +51,16 @@ const Shop = ({ name, imageURL, location }) => {
 					<div className={styles.nameWrapper}>
 						<h1 className={styles.name}>{name}</h1>
 					</div>
-					<Image src={imageURL || 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'} alt={name} className={styles.shopImg} width={600} height={360} />
+					<Image src={imageURL} alt={name} className={styles.shopImg} width={600} height={360} />
 				</section>
 				<section className={classNames('glass', styles.col2)}>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/places.svg' alt='places icon' width={24} height={24} />
-						<p className={styles.text}>{location.address}</p>
+						<p className={styles.text}>{address}</p>
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/locationArrow.svg' alt='location arrow icon' width={24} height={24} />
-						<p className={styles.text}>{location.neighborhood[0]}</p>
+						<p className={styles.text}>{neighbourhood}</p>
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/star.svg' alt='star icon' width={24} height={24} />

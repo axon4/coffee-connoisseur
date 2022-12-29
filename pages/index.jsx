@@ -34,8 +34,8 @@ function Home({ shops }) {
 					<>
 						<h2 className={styles.heading2}>London Shops</h2>
 						<section className={styles.cardLayout}>
-							{shops.map(({ fsq_id, name, imageURL }) => (
-								<Card key={fsq_id} name={name} imageURL={imageURL ||'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'} href={`/shop/${fsq_id}`} />
+							{shops.map(({ ID, name, imageURL }) => (
+								<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
 							))}
 						</section>
 					</>
