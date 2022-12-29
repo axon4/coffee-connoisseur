@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { storesGet } from '../../services/stores';
+import { shopsGet } from '../../services/shops';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
-import styles from '../../styles/store.module.css';
+import styles from '../../styles/shop.module.css';
 
 export async function getStaticPaths() {
-	const stores = await storesGet();
-	const paths = stores.map(({ fsq_id }) => ({
+	const shops = await shopsGet();
+	const paths = shops.map(({ fsq_id }) => ({
 		params: {ID: fsq_id.toString()}
 	}));
 	
@@ -19,15 +19,15 @@ export async function getStaticPaths() {
 };
 
 export async function getStaticProps({ params }) {
-	const stores = await storesGet();
-	const store = stores.find(({ fsq_id }) => fsq_id.toString() === params.ID);
+	const shops = await shopsGet();
+	const shop = shops.find(({ fsq_id }) => fsq_id.toString() === params.ID);
 		
 	return {
-		props: {...store}
+		props: {...shop}
 	};
 };
 
-const Store = ({ name, imageURL, location }) => {
+const Shop = ({ name, imageURL, location }) => {
 	const router = useRouter();
 	
 	if (router.isFallback) {
@@ -51,7 +51,7 @@ const Store = ({ name, imageURL, location }) => {
 					<div className={styles.nameWrapper}>
 						<h1 className={styles.name}>{name}</h1>
 					</div>
-					<Image src={imageURL || 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'} alt={name} className={styles.storeImg} width={600} height={360} />
+					<Image src={imageURL || 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'} alt={name} className={styles.shopImg} width={600} height={360} />
 				</section>
 				<section className={classNames('glass', styles.col2)}>
 					<div className={styles.iconWrapper}>
@@ -73,4 +73,4 @@ const Store = ({ name, imageURL, location }) => {
 	);
 };
 
-export default Store;
+export default Shop;

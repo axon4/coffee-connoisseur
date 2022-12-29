@@ -36,12 +36,12 @@
 	overflow: hidden;
 }
 
-.storeImgWrapper {
+.shopImgWrapper {
 	padding-top: 1rem /* 16px */;
 	padding-bottom: 1rem /* 16px */;
 }
 
-.storeImg {
+.shopImg {
 	box-shadow: var(0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 #0000),
 		0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 #0000,
 		0 25px 50px -12px rgba(0, 0, 0, 0.25);

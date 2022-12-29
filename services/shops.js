@@ -1,13 +1,13 @@
-export async function storesGet() {
+export async function shopsGet() {
     const queryParameters = new URLSearchParams({
         query: 'coffee',
         near: 'London',
         limit: 7
     });
-	const storesURL = new URL(`?${queryParameters}`, 'https://api.foursquare.com/v3/places/search');
+	const shopsURL = new URL(`?${queryParameters}`, 'https://api.foursquare.com/v3/places/search');
     
     try {
-		const response = await fetch(storesURL, {
+		const response = await fetch(shopsURL, {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
