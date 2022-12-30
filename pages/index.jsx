@@ -1,6 +1,7 @@
+import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
 // import Image from 'next/image';
+import { ShopContext } from './_app';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
 import { useLocation } from '../hooks/useLocation';
@@ -16,11 +17,13 @@ export async function getStaticProps() {
 };
 
 function Home({ shops }) {
-	const { locate, coordinates, loading, error: geoLocationError } = useLocation();
-	const [ nearByShops, setNearByShops ] = useState([]);
+	const { locate, loading, error: geoLocationError } = useLocation();
 	const [ error, setError ] = useState('');
-	// Development
-	const [ locating, setLocating ] = useState(false);
+	const { state, dispatch } = useContext(ShopContext);
+	const [ locating, setLocating ] = useState(false); 	// DEVELOPMENT
+
+
+	const { coordinates, shops: nearByShops } = state;
 	
 	useEffect(() => {
 		(async () => {
@@ -28,12 +31,18 @@ function Home({ shops }) {
 				if (coordinates) {
 					const shops = await shopsGet(30, coordinates);
 	
-					setNearByShops(shops);
+					dispatch({
+						type: 'SET_SHOPS',
+						payload: shops
+					});
 				} else {
 					// DEVELOPMENT
 					const shops = await shopsGet(30, process.env.COORDINATES);
 	
-					setNearByShops(shops);
+					dispatch({
+						type: 'SET_SHOPS',
+						payload: shops
+					});
 				};
 			} catch (error) {
 				setError(error.message);

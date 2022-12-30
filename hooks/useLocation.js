@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ShopContext } from '../pages/_app';
 
 export function useLocation() {
-	const [ coordinates, setCoordinates ] = useState('');
 	const [ loading, setLoading ] = useState(false);
 	const [ error, setError ] = useState('');
+	const { dispatch } = useContext(ShopContext);
 
 	const success = position => {
 		const { latitude, longitude } = position.coords;
 
-		setCoordinates(`${latitude},${longitude}`);
+		dispatch({
+			type: 'SET_COORDINATES',
+			payload: `${latitude},${longitude}`
+		});
 		setLoading(false);
 		setError('');
 	};
@@ -41,7 +45,6 @@ export function useLocation() {
 
 	return {
 		locate,
-		coordinates,
 		loading,
 		error
 	};
