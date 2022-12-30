@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
 	const shops = await shopsGet(); 
-	const shop = shops.find(({ ID }) => ID.toString() === params.ID);
+	const shop = shops.find(({ ID }) => ID.toString() === params.ID) ?? {};
 		
 	return {
 		props: {...shop}
