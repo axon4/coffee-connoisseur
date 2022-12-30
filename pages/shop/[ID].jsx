@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShopContext } from '../_app';
+import { ShopContext } from '../../contexts/shopContext';
 import { shopsGet } from '../../services/shops';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 // import Image from 'next/image';
-import { ShopContext } from './_app';
+import { ShopContext } from '../contexts/shopContext';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
 import { useLocation } from '../hooks/useLocation';

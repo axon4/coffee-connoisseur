@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { ShopContext } from '../pages/_app';
+import { ShopContext } from '../contexts/shopContext';
 
 export function useLocation() {
 	const [ loading, setLoading ] = useState(false);
