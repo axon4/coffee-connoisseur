@@ -3,7 +3,7 @@ import { photosGet } from './photos';
 export async function shopsGet(limit = 6, coordinates = null) {
 	let locationArgument;
 
-	if (coordinates) {
+	if (/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(coordinates)) {
 		locationArgument = {ll: coordinates};
 	} else {
 		locationArgument = {near: 'London'};

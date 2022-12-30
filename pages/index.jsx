@@ -22,14 +22,14 @@ function Home({ shops }) {
 	const { state, dispatch } = useContext(ShopContext);
 	const [ locating, setLocating ] = useState(false); 	// DEVELOPMENT
 
-
 	const { coordinates, shops: nearByShops } = state;
 	
 	useEffect(() => {
 		(async () => {
 			try {
 				if (coordinates) {
-					const shops = await shopsGet(30, coordinates);
+					const response = await fetch(`/api/shops?coordinates=${coordinates}&limit=30`);
+					const shops = await response.json();
 	
 					dispatch({
 						type: 'SET_SHOPS',
@@ -37,7 +37,8 @@ function Home({ shops }) {
 					});
 				} else {
 					// DEVELOPMENT
-					const shops = await shopsGet(30, process.env.COORDINATES);
+					const response = await fetch(`/api/shops?coordinates=${process.env.COORDINATES}&limit=30`);
+					const shops = await response.json();
 	
 					dispatch({
 						type: 'SET_SHOPS',
