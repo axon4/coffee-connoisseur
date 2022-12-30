@@ -1,6 +1,8 @@
+import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ShopContext } from '../_app';
 import { shopsGet } from '../../services/shops';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
@@ -27,16 +29,31 @@ export async function getStaticProps({ params }) {
 	};
 };
 
-const Shop = ({ name, address, neighbourhood, imageURL }) => {
+const Shop = initialProps => {
+	const [ shop, setShop ] = useState(initialProps)
 	const router = useRouter();
 	
 	if (router.isFallback) {
 		return <h1>Loading...</h1>
 	};
+
+	const { state: { shops } } = useContext(ShopContext);
+
+	const shopID = router.query.id;
+
+	useEffect(() => {
+		if ((Object.keys(initialProps).length === 0) && (shops.length > 0)) {
+			const shop = shops.find(({ ID }) => ID.toString() === shopID) ?? {};
+
+			setShop(shop);
+		};
+	}, [shopID]);
 	
 	const onUpVoteButtonClick = () => {
 		console.log('CLICK');
 	};
+
+	const { name, address, neighbourhood, imageURL } = shop;
 	
 	return (
 		<>
