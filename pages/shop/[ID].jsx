@@ -58,7 +58,7 @@ const Shop = initialProps => {
 	return (
 		<>
 			<Head>
-				<title>{name}</title>
+				<title>{name} | Coffee Connoisseur</title>
 			</Head>
 			<main className={classNames(styles.layout, styles.container)}>
 				<section className={styles.col1}>
