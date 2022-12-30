@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import Image from 'next/image';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
@@ -16,10 +16,34 @@ export async function getStaticProps() {
 };
 
 function Home({ shops }) {
-	const { locate, coordinates, loading, error } = useLocation();
+	const { locate, coordinates, loading, error: geoLocationError } = useLocation();
+	const [ nearByShops, setNearByShops ] = useState([]);
+	const [ error, setError ] = useState('');
+	// Development
+	const [ locating, setLocating ] = useState(false);
+	
+	useEffect(() => {
+		(async () => {
+			try {
+				if (coordinates) {
+					const shops = await shopsGet(30, coordinates);
+	
+					setNearByShops(shops);
+				} else {
+					// DEVELOPMENT
+					const shops = await shopsGet(30, process.env.COORDINATES);
+	
+					setNearByShops(shops);
+				};
+			} catch (error) {
+				setError(error.message);
+			};
+		})();
+	}, [coordinates, locating]);
 
 	const onButtonClick = () => {
 		locate();
+		setLocating(true);
 	};
 	
 	return (
@@ -34,9 +58,20 @@ function Home({ shops }) {
 					{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
 				</div>
 				<Banner buttonText={loading ? 'Locating...' : 'Locate Shops Near Me'} onButtonClick={onButtonClick} />
+				{geoLocationError && <pre>Error: {geoLocationError}</pre>}
 				{error && <pre>Error: {error}</pre>}
 				<div className={styles.sectionWrapper}>
-					{shops.length > 0 && (
+					{nearByShops?.length > 0 && (
+						<>
+							<h2 className={styles.heading2}>Shops NearBy</h2>
+							<section className={styles.cardLayout}>
+								{nearByShops.map(({ ID, name, imageURL }) => (
+									<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
+								))}
+							</section>
+						</>
+					)}
+					{shops?.length > 0 && (
 						<>
 							<h2 className={styles.heading2}>London Shops</h2>
 							<section className={styles.cardLayout}>

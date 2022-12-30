@@ -2,7 +2,7 @@ import { createApi as createAPI } from 'unsplash-js';
 
 export async function photosGet() {
 	try {
-		const unSplash = createAPI({accessKey: process.env.UNSPLASH_ACCESS_KEY});
+		const unSplash = createAPI({accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY});
 
 		const photos = await unSplash.search.getPhotos({
 			query: 'coffee cup',

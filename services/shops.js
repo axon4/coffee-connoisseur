@@ -1,10 +1,18 @@
 import { photosGet } from './photos';
 
-export async function shopsGet() {
+export async function shopsGet(limit = 6, coordinates = null) {
+	let locationArgument;
+
+	if (coordinates) {
+		locationArgument = {ll: coordinates};
+	} else {
+		locationArgument = {near: 'London'};
+	};
+
     const queryParameters = new URLSearchParams({
         query: 'coffee',
-        near: 'London',
-        limit: 7
+        limit,
+		...locationArgument
     });
 	const shopsURL = new URL(`?${queryParameters}`, 'https://api.foursquare.com/v3/places/search');
     
@@ -13,7 +21,7 @@ export async function shopsGet() {
 			method: 'GET',
 			headers: {
 				Accept: 'application/json',
-				Authorization: process.env.FOURSQUARE_API_KEY
+				Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY
 			}
 		});
 		const data = await response.json();
