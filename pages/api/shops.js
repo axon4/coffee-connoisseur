@@ -20,16 +20,29 @@ async function shops(request, response) {
 
 		case 'POST': {
 			try {
-				const shopRecords = await airTable
-					.select({filterByFormula: 'ID="0"'})
+				const records = await airTable
+					.select({filterByFormula: 'ID="1"'})
 					.firstPage();
 
-				if (shopRecords.length !== 0) {
-					const records = shopRecords.map(record => ({...record.fields}));
+				if (records.length !== 0) {
+					const parsedRecords = records.map(record => ({...record.fields}));
 
-					response.status(200).json(records);
+					response.status(200).json(parsedRecords);
 				} else {
-					// create record
+					const records = await airTable.create([{
+						fields: {
+							ID: "1",
+							name: 'Coffee Shop',
+							address: 'Coffee Shop Road',
+							neighbourhood: 'Coffee Grove',
+							upVotes: 8,
+							imageURL: 'coffee.shop'
+						}
+					}]);
+
+					const parsedRecords = records.map(record => ({...record.fields}));
+
+					response.status(200).json(parsedRecords);
 				};
 			} catch (error) {
 				response.status(500).send(`500 Internal Server Error: ${error}`);
