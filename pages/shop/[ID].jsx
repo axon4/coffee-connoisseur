@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+import classNames from 'classnames';
 import { ShopContext } from '../../contexts/shopContext';
 import { shopsGet } from '../../srv/shops';
-import { useRouter } from 'next/router';
-import classNames from 'classnames';
+import { shopsAPIPostCall } from '../../srv/APICalls/shops';
 import styles from '../../styles/shop.module.css';
 
 export async function getStaticPaths() {
@@ -30,7 +31,7 @@ export async function getStaticProps({ params }) {
 };
 
 const Shop = initialProps => {
-	const [ shop, setShop ] = useState(initialProps)
+	const [ shop, setShop ] = useState(initialProps);
 	const router = useRouter();
 	
 	if (router.isFallback) {
@@ -39,14 +40,22 @@ const Shop = initialProps => {
 
 	const { state: { shops } } = useContext(ShopContext);
 
-	const shopID = router.query.id;
+	const shopID = router.query.ID;
 
 	useEffect(() => {
 		if ((Object.keys(initialProps).length === 0) && (shops.length > 0)) {
-			const shop = shops.find(({ ID }) => ID.toString() === shopID) ?? {};
+			const shop = shops.find(({ ID }) => ID.toString() === shopID);
 
 			setShop(shop);
-		};
+			shopsAPIPostCall(shop)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data)
+				})
+				.catch(console.error)
+		} else {
+			shopsAPIPostCall(initialProps);
+		}
 	}, [shopID]);
 	
 	const onUpVoteButtonClick = () => {

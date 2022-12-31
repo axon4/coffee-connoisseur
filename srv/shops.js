@@ -38,6 +38,6 @@ export async function shopsGet(limit = 6, coordinates = null) {
 
 		return parsedShops;
 	} catch (error) {
-		console.error(error);
+		console.error('Error Getting Shop', error);
 	};
 };

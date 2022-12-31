@@ -6,6 +6,7 @@ import Banner from '../components/Banner';
 import Card from '../components/Card';
 import { useLocation } from '../hooks/useLocation';
 import { shopsGet } from '../srv/shops';
+import { shopsAPIGetCall } from '../srv/APICalls/shops';
 import styles from '../styles/Home.module.css';
 
 export async function getStaticProps() {
@@ -28,7 +29,10 @@ function Home({ shops }) {
 		(async () => {
 			try {
 				if (coordinates) {
-					const response = await fetch(`/api/shops?coordinates=${coordinates}&limit=30`);
+					const response = await shopsAPIGetCall({
+						coordinates,
+						limit: 30
+					});
 					const shops = await response.json();
 	
 					dispatch({
@@ -37,7 +41,10 @@ function Home({ shops }) {
 					});
 				} else {
 					// DEVELOPMENT
-					const response = await fetch(`/api/shops?coordinates=${process.env.COORDINATES}&limit=30`);
+					const response = await shopsAPIGetCall({
+						coordinates: process.env.COORDINATES,
+						limit: 30
+					});
 					const shops = await response.json();
 	
 					dispatch({
