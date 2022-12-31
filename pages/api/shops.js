@@ -3,6 +3,10 @@
 import airTable from '../../lib/airtable';
 import { shopsGet } from '../../srv/shops';
 
+function parseRecords(records) {
+	return records.map(record => ({...record.fields}));
+};
+
 async function shops(request, response) {
 	switch (request.method) {
 		case 'GET': {
@@ -20,30 +24,33 @@ async function shops(request, response) {
 
 		case 'POST': {
 			try {
-				const records = await airTable
-					.select({filterByFormula: 'ID="1"'})
-					.firstPage();
+				const newShop = request.body;
 
-				if (records.length !== 0) {
-					const parsedRecords = records.map(record => ({...record.fields}));
+				if (newShop.ID) {
+					const records = await airTable
+						.select({filterByFormula: `ID="${newShop.ID}"`})
+						.firstPage();
 
-					response.status(200).json(parsedRecords);
+					if (records.length !== 0) {
+						const parsedRecords = parseRecords(records);
+
+						response.status(200).json(parsedRecords);
+					} else {
+						if (newShop.name) {
+							const records = await airTable.create([{
+								fields: {...newShop}
+							}]);
+
+							const parsedRecords = parseRecords(records);
+
+							response.status(201).json(parsedRecords);
+						} else {
+							response.status(422).send('422 UnProcessable Entity: Missing \'name\'');
+						};
+					};
 				} else {
-					const records = await airTable.create([{
-						fields: {
-							ID: "1",
-							name: 'Coffee Shop',
-							address: 'Coffee Shop Road',
-							neighbourhood: 'Coffee Grove',
-							upVotes: 8,
-							imageURL: 'coffee.shop'
-						}
-					}]);
-
-					const parsedRecords = records.map(record => ({...record.fields}));
-
-					response.status(200).json(parsedRecords);
-				};
+					response.status(422).send('422 UnProcessable Entity: Missing \'ID\'');
+				}
 			} catch (error) {
 				response.status(500).send(`500 Internal Server Error: ${error}`);
 			};
