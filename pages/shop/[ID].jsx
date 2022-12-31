@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShopContext } from '../../contexts/shopContext';
-import { shopsGet } from '../../services/shops';
+import { shopsGet } from '../../srv/shops';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import styles from '../../styles/shop.module.css';

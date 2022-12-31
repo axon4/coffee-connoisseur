@@ -5,7 +5,7 @@ import { ShopContext } from '../contexts/shopContext';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
 import { useLocation } from '../hooks/useLocation';
-import { shopsGet } from '../services/shops';
+import { shopsGet } from '../srv/shops';
 import styles from '../styles/Home.module.css';
 
 export async function getStaticProps() {

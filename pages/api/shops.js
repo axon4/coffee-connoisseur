@@ -1,6 +1,6 @@
 // Next API Route Support: https://nextjs.org/docs/api-routes/introduction
 
-import { shopsGet } from '../../services/shops';
+import { shopsGet } from '../../srv/shops';
 
 async function shops(request, response) {
 	try {
