@@ -4,15 +4,12 @@ export async function shopsAPIGetCall(queryParameters) {
 	return await fetch(`/api/shops?${queryArguments}`, {method: 'GET'});
 };
 
-export async function shopsAPIPostCall({ upVotes, ...rest }) {
+export async function shopsAPIPostCall(shop) {
 	return await fetch('/api/shops', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({
-			...rest,
-			upVotes: 0
-		})
+		body: JSON.stringify(shop)
 	});
 };

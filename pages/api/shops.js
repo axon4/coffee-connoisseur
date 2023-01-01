@@ -38,7 +38,11 @@ async function shops(request, response) {
 					} else {
 						if (newShop.name) {
 							const records = await airTable.create([{
-								fields: {...newShop}
+								fields: {
+									...newShop,
+									date: new Date(),
+									upVotes: 0
+								}
 							}]);
 
 							const parsedRecords = parseRecords(records);
