@@ -1,6 +1,6 @@
 // Next API Route Support: https://nextjs.org/docs/api-routes/introduction
 
-import airTable, { parseRecords } from '../../../lib/airtable';
+import airTable, { getRecords, parseRecords } from '../../../lib/airtable';
 import { shopsGet } from '../../../srv/shops';
 
 async function shops(request, response) {
@@ -23,14 +23,10 @@ async function shops(request, response) {
 				const newShop = request.body;
 
 				if (newShop.ID) {
-					const records = await airTable
-						.select({filterByFormula: `ID="${newShop.ID}"`})
-						.firstPage();
+					const records = await getRecords(newShop.ID);
 
 					if (records.length !== 0) {
-						const parsedRecords = parseRecords(records);
-
-						response.status(200).json(parsedRecords);
+						response.status(200).json(records);
 					} else {
 						if (newShop.name) {
 							const records = await airTable.create([{
