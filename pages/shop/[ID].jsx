@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { ShopContext } from '../../contexts/shopContext';
+import { useWrappedSWR } from '../../hooks/useWrappedSWR';
 import { shopsGet } from '../../srv/shops';
 import { shopsAPIPostCall } from '../../srv/APICalls/shops';
 import styles from '../../styles/shop.module.css';
@@ -52,10 +53,26 @@ const Shop = initialProps => {
 		} else {
 			shopsAPIPostCall(null, initialProps);
 		}
-	}, [shopID]);
+	}, [shopID, initialProps]);
+
+	const { data, error } = useWrappedSWR(`/api/shops/shop?ID=${shopID}`);
+
+	useEffect(() => {
+		if (data?.length > 0) {
+			console.log('SWR', data);
+			const shop = data[0];
+
+			setShop(shop);
+			setUpVotes(shop.upVotes);
+		};
+	}, [data]);
 	
 	const onUpVoteButtonClick = () => {
 		setUpVotes(previousUpVotes => previousUpVotes + 1);
+	};
+
+	if (error && !data) {
+		return <pre>Error Getting Shop: {error.message} {data}</pre>
 	};
 
 	const { name, address, neighbourhood, imageURL } = shop;
