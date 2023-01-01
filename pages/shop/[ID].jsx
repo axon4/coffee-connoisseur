@@ -48,14 +48,9 @@ const Shop = initialProps => {
 			const shop = shops.find(({ ID }) => ID.toString() === shopID);
 
 			setShop(shop);
-			shopsAPIPostCall(shop)
-				.then(response => response.json())
-				.then(data => {
-					console.log(data)
-				})
-				.catch(console.error)
+			shopsAPIPostCall(null, shop);
 		} else {
-			shopsAPIPostCall(initialProps);
+			shopsAPIPostCall(null, initialProps);
 		}
 	}, [shopID]);
 	

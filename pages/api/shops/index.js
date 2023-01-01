@@ -1,11 +1,7 @@
 // Next API Route Support: https://nextjs.org/docs/api-routes/introduction
 
-import airTable from '../../lib/airtable';
-import { shopsGet } from '../../srv/shops';
-
-function parseRecords(records) {
-	return records.map(record => ({...record.fields}));
-};
+import airTable, { parseRecords } from '../../../lib/airtable';
+import { shopsGet } from '../../../srv/shops';
 
 async function shops(request, response) {
 	switch (request.method) {

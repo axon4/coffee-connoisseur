@@ -29,7 +29,7 @@ function Home({ shops }) {
 		(async () => {
 			try {
 				if (coordinates) {
-					const response = await shopsAPIGetCall({
+					const response = await shopsAPIGetCall(null, {
 						coordinates,
 						limit: 30
 					});
@@ -41,8 +41,8 @@ function Home({ shops }) {
 					});
 				} else {
 					// DEVELOPMENT
-					const response = await shopsAPIGetCall({
-						coordinates: process.env.COORDINATES,
+					const response = await shopsAPIGetCall(null, {
+						coordinates: process.env.NEXT_PUBLIC_COORDINATES,
 						limit: 30
 					});
 					const shops = await response.json();
