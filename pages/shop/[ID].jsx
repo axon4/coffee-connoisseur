@@ -32,6 +32,7 @@ export async function getStaticProps({ params }) {
 
 const Shop = initialProps => {
 	const [ shop, setShop ] = useState(initialProps);
+	const [ upVotes, setUpVotes ] = useState(0);
 	const router = useRouter();
 	
 	if (router.isFallback) {
@@ -59,7 +60,7 @@ const Shop = initialProps => {
 	}, [shopID]);
 	
 	const onUpVoteButtonClick = () => {
-		console.log('CLICK');
+		setUpVotes(previousUpVotes => previousUpVotes + 1);
 	};
 
 	const { name, address, neighbourhood, imageURL } = shop;
@@ -90,7 +91,7 @@ const Shop = initialProps => {
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/icons/star.svg' alt='star icon' width={24} height={24} />
-						<p className={styles.text}>7</p>
+						<p className={styles.text}>{upVotes}</p>
 					</div>
 					<button className={styles.upvoteButton} onClick={onUpVoteButtonClick}>UpVote</button>
 				</section>
