@@ -34,25 +34,22 @@ export async function getStaticProps({ params }) {
 const Shop = initialProps => {
 	const [ shop, setShop ] = useState(initialProps);
 	const [ upVotes, setUpVotes ] = useState(0);
-	const router = useRouter();
-	
-	if (router.isFallback) {
-		return <h1>Loading...</h1>
-	};
-
 	const { state: { shops } } = useContext(ShopContext);
+	const router = useRouter();
 
 	const shopID = router.query.ID;
 
 	useEffect(() => {
-		if ((Object.keys(initialProps).length === 0) && (shops.length > 0)) {
-			const shop = shops.find(({ ID }) => ID.toString() === shopID);
-
-			setShop(shop);
-			shopsAPIPostCall(null, shop);
-		} else {
-			shopsAPIPostCall(null, initialProps);
-		}
+		(async () => {
+			if ((initialProps && Object.keys(initialProps).length === 0) && (shops.length > 0)) {
+				const shop = shops.find(({ ID }) => ID.toString() === shopID);
+	
+				setShop(shop);
+				shopsAPIPostCall(null, shop);
+			} else {
+				shopsAPIPostCall(null, initialProps);
+			};
+		})();
 	}, [shopID, initialProps]);
 
 	const { data, error } = useWrappedSWR(`/api/shops/shop?ID=${shopID}`);
@@ -68,7 +65,7 @@ const Shop = initialProps => {
 	
 	const onUpVoteButtonClick = async () => {
 		try {
-			const response = shopsAPIPatchCall('/shop', shopID);
+			const response = await shopsAPIPatchCall('/shop', shopID);
 			const shop = await response.json();
 			
 			if (shop?.length > 0) {
@@ -79,8 +76,12 @@ const Shop = initialProps => {
 		};
 	};
 
-	if (error && !data) {
-		return <pre>Error Getting Shop: {error.message} {data}</pre>
+	if (router.isFallback ?? !data) {
+		return <h1>Loading...</h1>
+	};
+
+	if (error) {
+		return <pre>Error Getting Shop: {error.message}</pre>
 	};
 
 	const { name, address, neighbourhood, imageURL } = shop;
