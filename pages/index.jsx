@@ -39,18 +39,6 @@ function Home({ shops }) {
 						type: 'SET_SHOPS',
 						payload: shops
 					});
-				} else {
-					// DEVELOPMENT
-					const response = await shopsAPIGetCall(null, {
-						coordinates: process.env.NEXT_PUBLIC_COORDINATES,
-						limit: 30
-					});
-					const shops = await response.json();
-	
-					dispatch({
-						type: 'SET_SHOPS',
-						payload: shops
-					});
 				};
 			} catch (error) {
 				setError(error.message);

@@ -11,6 +11,6 @@ export async function photosGet() {
 	
 		return photoURLs;
 	} catch (error) {
-		console.error(error);
+		console.error('Error Getting Photos', error);
 	};
 };

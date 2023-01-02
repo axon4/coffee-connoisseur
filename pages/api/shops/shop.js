@@ -32,7 +32,7 @@ async function shop(request, response) {
 					const records = await getRecords(ID);
 
 					if (records.length !== 0) {
-						const record = records[0]; console.log({ record })
+						const record = records[0];
 						const updatedRecord = await airTable.update([{
 							id: record.recordID,
 							fields: {
@@ -54,7 +54,6 @@ async function shop(request, response) {
 				};
 			} catch (error) {
 				response.status(500).send(`500 Internal Server Error: ${error}`);
-				console.error(error)
 			};
 		};
 
