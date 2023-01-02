@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { ShopContext } from '../../contexts/shopContext';
 import { useWrappedSWR } from '../../hooks/useWrappedSWR';
 import { shopsGet } from '../../srv/shops';
-import { shopsAPIPostCall } from '../../srv/APICalls/shops';
+import { shopsAPIPatchCall, shopsAPIPostCall } from '../../srv/APICalls/shops';
 import styles from '../../styles/shop.module.css';
 
 export async function getStaticPaths() {
@@ -59,7 +59,6 @@ const Shop = initialProps => {
 
 	useEffect(() => {
 		if (data?.length > 0) {
-			console.log('SWR', data);
 			const shop = data[0];
 
 			setShop(shop);
@@ -67,8 +66,17 @@ const Shop = initialProps => {
 		};
 	}, [data]);
 	
-	const onUpVoteButtonClick = () => {
-		setUpVotes(previousUpVotes => previousUpVotes + 1);
+	const onUpVoteButtonClick = async () => {
+		try {
+			const response = shopsAPIPatchCall('/shop', shopID);
+			const shop = await response.json();
+			
+			if (shop?.length > 0) {
+				setUpVotes(previousUpVotes => previousUpVotes + 1);
+			};
+		} catch (error) {
+			console.error('Error UpVoting Shop:', error);
+		};
 	};
 
 	if (error && !data) {

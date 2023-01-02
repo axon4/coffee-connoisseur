@@ -32,3 +32,15 @@ export async function shopsAPIPostCall(path, shop) {
 		body: JSON.stringify(shop)
 	});
 };
+
+export async function shopsAPIPatchCall(path, ID) {
+	let pathName = getPathName(path);
+
+	return await fetch(pathName, {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ ID })
+	});
+};
