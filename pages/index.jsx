@@ -22,7 +22,6 @@ function Home({ shops }) {
 	const { locate, loading, error: geoLocationError } = useLocation();
 	const [ error, setError ] = useState('');
 	const { state, dispatch } = useContext(ShopContext);
-	const [ locating, setLocating ] = useState(false); 	// DEVELOPMENT
 
 	const { coordinates, shops: nearByShops } = state;
 	
@@ -45,11 +44,10 @@ function Home({ shops }) {
 				setError(error.message);
 			};
 		})();
-	}, [coordinates, locating]);
+	}, [coordinates]);
 
 	const onButtonClick = () => {
 		locate();
-		setLocating(true);
 	};
 	
 	return (
