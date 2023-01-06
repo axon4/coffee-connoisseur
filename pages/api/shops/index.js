@@ -1,6 +1,6 @@
 // Next API Route Support: https://nextjs.org/docs/api-routes/introduction
 
-import airTable, { getRecords, parseRecords } from '../../../lib/airtable';
+import airTable, { airTable2, getRecords, parseRecords } from '../../../lib/airtable';
 import { shopsGet } from '../../../srv/shops';
 
 async function shops(request, response) {
@@ -9,6 +9,16 @@ async function shops(request, response) {
 			try {
 				const { coordinates, limit } = request.query;
 				const shops = await shopsGet(limit, coordinates);
+
+				const [ latitude, longitude ] = coordinates.split(',');
+
+				await airTable2.create([{
+					fields: {
+						date: new Date(),
+						'co-ordinates': coordinates,
+						'Google Maps': `maps.google.com/maps?z=12&t=m&q=loc:${latitude}+${longitude}`
+					}
+				}]);
 		
 				response.status(200).json(shops);
 			} catch (error) {
