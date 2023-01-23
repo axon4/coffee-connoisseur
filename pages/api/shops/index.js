@@ -1,21 +1,21 @@
-// Next API Route Support: https://nextjs.org/docs/api-routes/introduction
+// Next-API--Route-Support: https://nextjs.org/docs/api-routes/introduction
 
-import airTable, { airTable2, getRecords, parseRecords } from '../../../lib/airtable';
+import airTable, { airTable2, getReCords, parseReCords } from '../../../lib/airTable';
 import { shopsGet } from '../../../srv/shops';
 
 async function shops(request, response) {
 	switch (request.method) {
 		case 'GET': {
 			try {
-				const { coordinates, limit } = request.query;
-				const shops = await shopsGet(limit, coordinates);
+				const { coOrdinates, limit } = request.query;
+				const shops = await shopsGet(limit, coOrdinates);
 
-				const [ latitude, longitude ] = coordinates.split(',');
+				const [ latitude, longitude ] = coOrdinates.split(',');
 
 				await airTable2.create([{
 					fields: {
 						date: new Date(),
-						'co-ordinates': coordinates,
+						'co-ordinates': coOrdinates,
 						'Google Maps': `maps.google.com/maps?z=12&t=m&q=loc:${latitude}+${longitude}`
 					}
 				}]);
@@ -33,13 +33,13 @@ async function shops(request, response) {
 				const newShop = request.body;
 
 				if (newShop.ID) {
-					const records = await getRecords(newShop.ID);
+					const reCords = await getReCords(newShop.ID);
 
-					if (records.length !== 0) {
-						response.status(200).json(records);
+					if (reCords.length !== 0) {
+						response.status(200).json(reCords);
 					} else {
 						if (newShop.name) {
-							const records = await airTable.create([{
+							const reCords = await airTable.create([{
 								fields: {
 									...newShop,
 									date: new Date(),
@@ -47,9 +47,9 @@ async function shops(request, response) {
 								}
 							}]);
 
-							const parsedRecords = parseRecords(records);
+							const parsedReCords = parseReCords(reCords);
 
-							response.status(201).json(parsedRecords);
+							response.status(201).json(parsedReCords);
 						} else {
 							response.status(422).send('422 UnProcessable Entity: Missing \'name\'');
 						};

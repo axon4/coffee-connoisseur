@@ -1,17 +1,17 @@
 import { useContext, useState } from 'react';
-import { ShopContext } from '../contexts/shopContext';
+import { ShopConText } from '../conTexts/shopConText';
 
 export function useLocation() {
 	const [ loading, setLoading ] = useState(false);
 	const [ error, setError ] = useState('');
-	const { dispatch } = useContext(ShopContext);
+	const { disPatch } = useContext(ShopConText);
 
 	const success = position => {
 		const { latitude, longitude } = position.coords;
 
-		dispatch({
+		disPatch({
 			type: 'SET_COORDINATES',
-			payload: `${latitude},${longitude}`
+			payLoad: `${latitude},${longitude}`
 		});
 		setLoading(false);
 		setError('');
@@ -36,16 +36,12 @@ export function useLocation() {
 
 	const locate = () => {
 		if (!navigator.geolocation) {
-			setError('GeoLocation API is UnSupported in your Browser');
+			setError('GeoLocation-API UnSupported in Browser');
 		} else {
 			setLoading(true);
 			navigator.geolocation.getCurrentPosition(success, failure);
 		};
 	};
 
-	return {
-		locate,
-		loading,
-		error
-	};
+	return { locate, loading, error };
 };

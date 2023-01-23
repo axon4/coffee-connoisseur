@@ -9,11 +9,10 @@
 	box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
 	margin: 0;
 	padding: 0;
-	background: url('/background.png');
+	background: url('/backGround.png');
 	background-position: 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -25,36 +24,28 @@ body {
 	font-family: 'IBMPlexSans';
 	font-style: normal;
 	font-weight: 500;
-	src: url(/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+	src: url('/fonts/IBMPlexSans-Regular.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'IBMPlexSans';
 	font-style: normal;
 	font-weight: 600;
-	src: url(/fonts/IBMPlexSans-SemiBold.ttf) format('truetype');
+	src: url('/fonts/IBMPlexSans-SemiBold.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'IBMPlexSans';
 	font-style: normal;
 	font-weight: 700;
-	src: url(/fonts/IBMPlexSans-Bold.ttf) format('truetype');
+	src: url('/fonts/IBMPlexSans-Bold.ttf') format('truetype');
 }
 
 p {
 	font-weight: 500;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-p,
-pre {
+h1, h2, h3, h4, h5, h6, hr, p, pre {
 	margin: 0;
 }
 
@@ -74,7 +65,7 @@ a {
 	color: inherit;
 }
 
-/* glass morphism */
+/* glass-morphism */
 
 .glass {
 	background: hsla(0, 0%, 100%, 0.4);

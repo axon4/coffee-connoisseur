@@ -5,10 +5,10 @@ const Banner = ({ buttonText, onButtonClick }) => (
 		<hgroup>
 			<h1 className={styles.title}>
 				<span className={styles.title1}>Coffee</span>
-				&nbsp;
+				-
 				<span className={styles.title2}>Connoisseur</span>
 			</h1>
-			<p className={styles.subTitle}>Discover Local Coffee Shops</p>
+			<p className={styles.subTitle}>DisCover Local Coffee-Shops</p>
 		</hgroup>
 		<div className={styles.buttonWrapper}>
 			<button className={styles.button} onClick={onButtonClick}>{buttonText}</button>

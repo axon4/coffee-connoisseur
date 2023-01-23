@@ -1,16 +1,16 @@
-import airTable, { getRecords, parseRecords } from '../../../lib/airtable';
+import airTable, { getReCords, parseReCords } from '../../../lib/airTable';
 
 async function shop(request, response) {
-	switch (request.method) {		
+	switch (request.method) {
 		case 'GET': {
 			try {
 				const { ID } = request.query;
 
 				if (ID) {
-					const records = await getRecords(ID);
+					const reCords = await getReCords(ID);
 
-					if (records.length !== 0) {
-						response.status(200).json(records);
+					if (reCords.length !== 0) {
+						response.status(200).json(reCords);
 					} else {
 						response.status(404).json({message: '404 Not Found'});
 					};
@@ -29,20 +29,20 @@ async function shop(request, response) {
 				const { ID } = request.body;
 
 				if (ID) {
-					const records = await getRecords(ID);
+					const reCords = await getReCords(ID);
 
-					if (records.length !== 0) {
-						const record = records[0];
-						const updatedRecord = await airTable.update([{
-							id: record.recordID,
+					if (reCords.length !== 0) {
+						const reCord = reCords[0];
+						const upDatedReCord = await airTable.update([{
+							id: reCord.recordID,
 							fields: {
-								ID: record.ID,
-								upVotes: parseInt(record.upVotes + 1)
+								ID: reCord.ID,
+								upVotes: parseInt(reCord.upVotes + 1)
 							}
 						}]);
 
-						if (updatedRecord) {
-							const parsedRecord = parseRecords(updatedRecord);
+						if (upDatedReCord) {
+							const parsedRecord = parseReCords(upDatedReCord);
 
 							response.status(200).json(parsedRecord);
 						};

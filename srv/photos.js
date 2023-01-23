@@ -1,4 +1,4 @@
-import unSplash from '../lib/unsplash';
+import unSplash from '../lib/unSplash';
 
 export async function photosGet() {
 	try {

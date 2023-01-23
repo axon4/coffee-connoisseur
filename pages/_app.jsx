@@ -1,4 +1,4 @@
-import ShopProvider from '../contexts/shopContext';
+import ShopProvider from '../conTexts/shopConText';
 import '../styles/globals.css';
 
 function Application({ Component, pageProps }) {

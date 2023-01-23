@@ -50,17 +50,15 @@
 	background-color: var(--text-purple-dark);
 }
 
-/** 
-	breakpoints:
-	------------
-	sm: min-width: 640px; //small device
-	md: min-width: 768px; // medium device
-	lg: min-width: 1024px; // large device
-	xl: min-width: 1280px; // extra large device
-	2xl: min-width: 1536px; // 2 x extra large device
-  **/
+/* breakPoints:
+sm: min-width: 640px; // small device
+md: min-width: 768px; // medium device
+lg: min-width: 1024px; // large device
+xl: min-width: 1280px; // extra large device
+2xl: min-width: 1536px; // extra extra large device */
 
-/** sm breakpoint **/
+
+/** sm-breakPoint **/
 @media (min-width: 640px) {
 	.title {
 		font-size: 3rem;
@@ -78,7 +76,7 @@
 	}
 }
 
-/** md breakpoint **/
+/** md-breakPoint **/
 @media (min-width: 768px) {
 	.title {
 		font-size: 3.75rem;
@@ -99,7 +97,7 @@
 	}
 }
 
-/** lg breakpoint **/
+/** lg-breakPoint **/
 @media (min-width: 1024px) {
 	.container {
 		text-align: left;
@@ -124,7 +122,7 @@
 	}
 }
 
-/** xl breakpoint **/
+/** xl-breakPoint **/
 @media (min-width: 1280px) {
 	.title2 {
 		display: inline;

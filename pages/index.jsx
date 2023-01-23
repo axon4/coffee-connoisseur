@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 // import Image from 'next/image';
 import classNames from 'classnames';
-import { ShopContext } from '../contexts/shopContext';
+import { ShopConText } from '../conTexts/shopConText';
 import Banner from '../components/Banner';
 import Card from '../components/Card';
 import { useLocation } from '../hooks/useLocation';
@@ -21,39 +21,39 @@ export async function getStaticProps() {
 function Home({ shops }) {
 	const { locate, loading, error: geoLocationError } = useLocation();
 	const [ error, setError ] = useState('');
-	const { state, dispatch } = useContext(ShopContext);
+	const { state, disPatch } = useContext(ShopConText);
 
-	const { coordinates, shops: nearByShops } = state;
-	
+	const { coOrdinates, shops: nearByShops } = state;
+
 	useEffect(() => {
 		(async () => {
 			try {
-				if (coordinates) {
+				if (coOrdinates) {
 					const response = await shopsAPIGetCall(null, {
-						coordinates,
+						coOrdinates,
 						limit: 30
 					});
 					const shops = await response.json();
-	
-					dispatch({
+
+					disPatch({
 						type: 'SET_SHOPS',
-						payload: shops
+						payLoad: shops
 					});
 				};
 			} catch (error) {
 				setError(error.message);
 			};
 		})();
-	}, [coordinates]);
+	}, [coOrdinates]);
 
 	const onButtonClick = () => {
 		locate();
 	};
-	
+
 	return (
 		<main className={classNames(styles.container, styles.main)}>
 			<Head>
-				<title>Coffee Connoisseur</title>
+				<title>Coffee-Connoisseur</title>
 			</Head>
 			<div className={styles.hero}>
 				{/* <Image src='/hero.png' alt='hero' width={700} height={400} /> */}
@@ -65,9 +65,9 @@ function Home({ shops }) {
 				{nearByShops?.length > 0 && (
 					<>
 						<h2 className={styles.heading2}>Shops NearBy</h2>
-						<section className={styles.cardLayout}>
+						<section className={styles.cardLayOut}>
 							{nearByShops.map(({ ID, name, imageURL }) => (
-								<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
+								<Card key={ID} name={name} imageURL={imageURL} hRef={`/shop/${ID}`} />
 							))}
 						</section>
 					</>
@@ -75,9 +75,9 @@ function Home({ shops }) {
 				{shops?.length > 0 && (
 					<>
 						<h2 className={styles.heading2}>London Shops</h2>
-						<section className={styles.cardLayout}>
+						<section className={styles.cardLayOut}>
 							{shops.map(({ ID, name, imageURL }) => (
-								<Card key={ID} name={name} imageURL={imageURL} href={`/shop/${ID}`} />
+								<Card key={ID} name={name} imageURL={imageURL} hRef={`/shop/${ID}`} />
 							))}
 						</section>
 					</>
